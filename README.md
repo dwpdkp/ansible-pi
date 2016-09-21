@@ -11,7 +11,7 @@ There is a [complete guide to setting up your raspberry pi without a keyboard an
 Clone and setup the ansible script. 
 
 ```
-git clone https://github.com/dwpdkp/ansible-pi.git
+git clone git@github.com:dwpdkp/ansible-pi.git
 cd ansible-pi
 cp hosts.example hosts
 cp wpa_supplicant.conf.example wpa_supplicant.conf
