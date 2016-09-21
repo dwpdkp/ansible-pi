@@ -1,0 +1,207 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+/**
+ * var Number counter = 1
+ * var Timer timer = null
+ * 
+ */
+
+
+/**
+ * This is a demo rule which simulates a real dimmer by reacting to increase/decrease commands 
+ * and posting an updated state on the bus 
+ */
+rule "Dimmed Light"
+	when
+		Item DimmedLight received command
+	then
+		var Number percent = 0
+		if(DimmedLight.state instanceof DecimalType) percent = DimmedLight.state as DecimalType 
+			
+		if(receivedCommand==INCREASE) percent = percent + 5
+		if(receivedCommand==DECREASE) percent = percent - 5
+
+		if(percent<0)   percent = 0
+		if(percent>100) percent = 100
+		postUpdate(DimmedLight, percent);
+end
+
+/**
+ * This rule demonstrates how a NumberItem can be used to easily control the local sound system.
+ * A selection widget in the UI provides easy access for this
+ */
+rule "Select Radio Station"
+	when
+		Item Radio_Station received command
+	then
+		switch(receivedCommand) {
+			case 0 : playStream(null)
+			case 1 : playStream("http://metafiles.gl-systemhaus.de/hr/hr3_2.m3u")
+			case 2 : playStream("http://mp3-live.swr3.de/swr3_m.m3u")
+			case 3 : playStream("http://edge.live.mp3.mdn.newmedia.nacamar.net/radioffh/livestream.mp3.m3u")
+		}
+end
+
+/**
+ * This rules controls the volume on the local host
+ */
+rule "Volume control"
+	when
+		Item Volume received command
+	then
+		if(receivedCommand instanceof PercentType) {
+			setMasterVolume(receivedCommand as PercentType)
+		} else {
+			if(receivedCommand==INCREASE) increaseMasterVolume(20)
+			if(receivedCommand==DECREASE) decreaseMasterVolume(20)	
+		}
+		postUpdate(Volume, masterVolume * 100)
+end
+
+/**
+ * The following rules help initializing the demo items with some helpful states.
+ */
+/**
+rule "Initialize light states"
+	when
+		System started
+	then
+		Lights?.members.forEach(light|
+			postUpdate(light, if(Math::random > 0.7) ON else OFF)
+		)
+end
+
+rule "Initialize heating states"
+	when 
+		System started
+	then
+		Heating?.members.forEach(heating|
+			postUpdate(heating, if(Math::random > 0.8) ON else OFF)
+		)
+		postUpdate(Temperature_Setpoint, 22)
+end
+
+rule "Initialize contact states"
+	when 
+		System started
+	then
+		Windows?.members.forEach(window|
+			postUpdate(window, if(Math::random > 0.5) OPEN else CLOSED)
+		)
+end
+*/
+
+rule "Initialize Home Location"
+	when 
+		System started
+	then
+		HomeLocation.postUpdate(new PointType("28.6028750,-81.3303470"))
+end
+
+rule "Set random room temperatures"
+	when 
+		System started or
+		Time cron "0 0/5 * * * ?"
+	then
+		Temperature?.members.forEach(temperature|
+			postUpdate(temperature, 20.0 + (25.0 - (Math::random * 50.0).intValue) / 10.0)
+		)
+end
+
+rule "Update max and min temperatures"
+when
+	Item Weather_Temperature changed
+then	
+	postUpdate(Weather_Temp_Max, Weather_Temperature.maximumSince(now.toDateMidnight).state)
+	postUpdate(Weather_Temp_Min, Weather_Temperature.minimumSince(now.toDateMidnight).state)
+	logInfo("Weather", "Temperature evolved of " + Weather_Temperature.deltaSince(now.minusMinutes(2)) + " degrees.")
+end
+
+/** shows how to use sensor values from the past */
+rule "Persistence Demo"
+when
+	Time cron "0 * * * * ?"
+then	
+	if(Weather_Temperature.changedSince(now.minusMinutes(1))) {
+		logInfo("PersistenceDemo", "2 minutes ago, the temperature was " + Weather_Temperature.historicState(now.minusMinutes(2)) + " degrees.")
+	}
+end
+
+/** 
+ * shows how to check recent switch states - very helpful to avoid executing something too often, just
+ * because somebody presses a button too often (e.g. sending a notification, if the doorbell button is pressed)
+ */
+rule "Persistence Demo 2"
+when
+	Item DemoSwitch received command
+then
+	if(!DemoSwitch.changedSince(now.minusSeconds(5))) {
+		logInfo("PersistenceDemo2", "You did not press this button during the last 5 seconds!")
+	}
+end
+
+// Creates an item that stores the last update time of this item
+rule "Records last weather update time"
+when
+  Item Weather_Temperature received update
+then
+  postUpdate(Weather_LastUpdate, new DateTimeType())
+end
+
+/* Mail Box Rules */
+/* 
+rule "send email"
+when
+	Item itm_mailbox changed from OFF to ON
+then
+	playSound("aolmail.mp3")
+	sendMail("dwpdkp@gmail.com", "You Have Mail..." , "This is a Test...")
+end
+*/
+
+/*
+rule "update mailbox"
+when
+	Item itm_mailboxmqtt received update
+then
+	sendCommand(itm_mailbox, ON)
+	postUpdate(itm_mailbox_time, new DateTimeType())
+end
+*/
+
+
+rule "MqttPostionParseDoug"
+when 
+    Item mqttPositionDougRaw changed
+then
+    var String json = (mqttPositionDougRaw.state as StringType).toString
+    // {"_type": "location", "lat": "47.5010314", "lon": "8.3444293",
+    //    "tst": "1422616466", "acc": "21.05", "batt": "40"}
+    var String type = transform("JSONPATH", "$._type", json)
+    if (type == "location") {
+      var String lat  = transform("JSONPATH", "$.lat", json)
+      var String lon  = transform("JSONPATH", "$.lon", json)
+      var String acc  = transform("JSONPATH", "$.acc", json)
+      var String batt = transform("JSONPATH", "$.batt", json)
+      var String alt  = transform("JSONPATH", "$.alt", json)
+      var String tid  = transform("JSONPATH", "$.tid", json)
+
+      sendCommand(mqttDougLatitude,  lat)
+      logInfo("MqttService", "The Latitude of your Phone was just Updated")
+      sendCommand(mqttDougLongitude, lon)
+      logInfo("MqttService", "The Longitude of your Phone was just Updated")
+      sendCommand(mqttDougAccuracy,   acc) 
+      logInfo("MqttService", "The Accuracy of your Phone was just Updated")
+      sendCommand(mqttDougiPhone4sBattery,  batt)
+      logInfo("MqttService", "The Battery % of your Phone was just Updated")
+      sendCommand(mqttDougiPhone4sAlt,  alt)
+      logInfo("MqttService", "The Altitude of your Phone was just Updated")
+      sendCommand(mqttDougiPhone4sTid,  tid)
+      logInfo("MqttService", "The ID of your Phone was just Updated")
+      postUpdate(mqttDougLastUpdate, new DateTimeType())
+      logInfo("MqttService", "The Location of your Phone was just Updated")
+    }
+end
+

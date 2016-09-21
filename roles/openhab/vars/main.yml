@@ -1,0 +1,21 @@
+---
+# vars file for openhab
+openhab_pkgs:
+  - openhab-runtime
+  - openhab-addon-binding-astro
+  - openhab-addon-binding-ntp
+  - openhab-addon-binding-mqtt
+  - openhab-addon-binding-mqttitude
+  - openhab-addon-binding-weather
+  - openhab-addon-persistence-db4o
+  - openhab-addon-persistence-exec
+  - openhab-addon-persistence-logging
+  - openhab-addon-persistence-mqtt
+  - openhab-addon-persistence-mysql
+  - openhab-addon-persistence-rrd4j
+  - openhab-addon-io-myopenhab
+  - mosquitto
+  - mosquitto-clients
+  - python-mosquitto
+  - libmosquitto1
+  - lsof

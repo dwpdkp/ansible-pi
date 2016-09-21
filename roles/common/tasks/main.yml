@@ -1,0 +1,23 @@
+---
+# tasks file for roles/common
+
+- include: admin_users.yml
+  when: "{{ update_admin_users }}"
+
+- include: apt.yml
+  when: "{{ upgrade_all_apt_pkgs }}"
+
+- include: mount_usb.yml
+  when: "{{ add_mount_for_usb }}"
+
+- include: vim.yml
+  when: "{{ install_vim }}"
+
+- include: wifi.yml
+  when: "{{ configure_wifi }}"
+
+- include: samba.yml
+  when: "{{ configure_samba }}"
+
+- include: openvpn.yml
+  when: "{{ configure_openvpn }}"

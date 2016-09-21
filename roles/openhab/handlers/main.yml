@@ -1,0 +1,4 @@
+---
+# handlers file for openhab
+- name: restart openhab
+  service: "name=openhab state=restarted sleep=5"

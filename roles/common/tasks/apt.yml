@@ -1,0 +1,16 @@
+---
+# tasks file for apt
+- name: APT | Update package cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: APT | Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    install_recommends: no
+
+- name: APT | Full Upgrade
+  apt:
+    upgrade: full

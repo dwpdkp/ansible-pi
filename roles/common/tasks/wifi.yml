@@ -1,0 +1,4 @@
+---
+- name: Wifi | Configure WIFI
+  copy: src=files/wifi/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
+  notify: restart server

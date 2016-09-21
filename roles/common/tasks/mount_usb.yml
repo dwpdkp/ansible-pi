@@ -1,0 +1,32 @@
+---
+- name: Mount USB | Get the UUID for the USB mounted as sda.
+  shell: ls -l /dev/disk/by-uuid/ | awk '/sda/ { print $9 }'
+  register: usb_uuid
+  ignore_errors: True
+  notify: restart server
+
+#- name: Mount USB | Get the UID for the User openhab.
+#  shell: id openhab | awk '/uid/ { print $1 }' | sed s/\(openhab\)//g
+#  register: oh_uid
+#  ignore_errors: True
+#  notify: restart server
+
+#- name: Mount USB | Get the GID for the User openhab.
+#  shell: id openhab | awk '/gid/ { print $2 }' | sed s/\(openhab\)//g
+#  register: oh_gid
+#  ignore_errors: True
+#  notify: restart server
+
+#- debug: var=usb_uuid
+#- debug: var=pi_uid
+#- debug: var=pi_gid
+
+- name: Mount USB | Create the mounting point /downloads.
+  file: path=/downloads state=directory mode=0770
+  notify: restart server
+
+- name: Mount USB | Mount the USB Drive at /downloads.
+# Mount up device by UUID
+#  mount: name=/downloads src='UUID={{ usb_uuid.stdout }}' fstype=vfat opts=nofail,auto,noatime,{{ oh_uid.stdout }},{{ oh_gid.stdout }},umask=000 state=present
+  mount: name=/downloads src='UUID={{ usb_uuid.stdout }}' fstype=vfat opts=nofail,auto,noatime,user,umask=0000 state=present
+  notify: restart server

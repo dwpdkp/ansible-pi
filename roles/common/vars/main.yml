@@ -1,0 +1,28 @@
+---
+# vars file for common
+server_name: "vpn-nl1.privatevpn.com"
+openvpn_bin: "/usr/sbin/openvpn"
+install_path: "/etc/openvpn"
+pv_conf: privatvpn.conf
+pv_cert: "ca.crt"
+pv_login: "privatvpn.login"
+pv_scr: privatvpn
+
+samba_packages:
+  - samba
+  - samba-common-bin
+workgroup: WORKGROUP
+public_share_name: public
+public_share_path: /samba/public
+private_share_name: private
+private_share_path: /samba/private
+openhab_home_name: 'OpenHAB Home'
+openhab_home_path: /usr/share/openhab
+openhab_config_name: 'OpenHAB Config'
+openhab_config_path: /etc/openhab
+samba_group_name: smbgrp
+samba_users:
+  - name: 'pi'
+    smbpasswd: 'pi'
+  - name: 'openhab'
+    smbpasswd: 'openhab'

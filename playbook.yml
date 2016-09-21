@@ -1,0 +1,11 @@
+---
+- name: Ansible Playbook for configuring brand new Raspberry Pi
+
+  hosts: rpis
+  roles:
+    - common
+#    - openhab
+#    - mysql
+#    - sonarr
+  remote_user: pi
+  become: yes

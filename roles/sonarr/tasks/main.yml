@@ -1,0 +1,35 @@
+---
+# tasks file for sonarr
+- name: 'Update package cache'
+  action: apt update_cache=yes
+
+- name: 'Upgrade packages'
+  action: apt upgrade=safe
+
+- name: 'Install libmono-cil-dev'
+  apt:
+    name: install libmono-cil-dev
+    state: latest
+
+- name: 'Add sources to install Sonarr on Raspbian'
+  apt_key: keyserver=keyserver.ubuntu.com id=FDA5DFFC
+
+
+- name: 'Add the openhab.list repo to the /etc/apt/sources.list.d folder'
+  command: echo "deb https://apt.sonarr.tv/ master main" | sudo tee /etc/apt/sources.list.d/sonarr.list
+  become: true
+
+- name: 'Update package cache'
+  action: apt update_cache=yes
+
+- name: 'Install Sonarr (NzbDrone)'
+  apt:
+    name: install nzbdrone
+    state: latest
+
+- name: 'Take ownership of the Sonarr installation so updates will work properly'
+  file: path=/opt/NzbDrone owner=pi group=pi recurse=yes
+
+- name: 'Create the init.d script file'
+  copy: src=files/nzbdrone dest=/etc/init.d/nzbdrone owner=root group=root mode=0755
+

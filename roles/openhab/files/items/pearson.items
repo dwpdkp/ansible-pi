@@ -1,0 +1,292 @@
+Group All
+Group gGF 		(All)
+Group Outside 	(All)
+/*Group Shutters 	(All)*/
+Group Weather 	(All)
+Group Status 	(All)
+Group Atmosphere (All)
+Group Wind		(All)
+Group Precipitation (All)
+Group Condition (All)
+Group Phones	(All)
+
+Group GF_MainBath	"Main Bath Room" 	<bath> 		(gGF)
+Group GF_BoysBath 	"Boy's Bath Room"	<bath>	 	(gGF)
+Group GF_Hallway 	"Hallway" 		<corridor> 	(gGF)
+Group GF_Office 	"Office" 		<computer> 	(gGF)
+Group GF_Child 		"Boy's Room" 	<boy1> 		(gGF)
+Group GF_MstrBed	"Master Bedroom"<bedroom> 	(gGF)
+Group GF_Living 	"Living Room"	<sofa>		(gGF)
+Group GF_Family		"Family Room"	<television>	(gGF)
+Group GF_Kitchen 	"Kitchen"		<kitchen>	(gGF)
+Group GF_Dining 	"Dining Room"	<kitchen>	(gGF)
+Group DougsPhone	"Doug's Phone Stats"	<phone>	(Phones)
+
+/* active groups */
+Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
+Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
+Group:Number:AVG 				Temperature	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
+Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
+
+/* Lights */
+Switch Light_GF_MainBath_Ceiling 		"Ceiling" 		(GF_MainBath, Lights)
+Switch Light_GF_MainBath_Mirror 		"Mirror" 		(GF_MainBath, Lights)
+Switch Light_GF_BoysBath_Ceiling 		"Ceiling" 		(GF_BoysBath, Lights)
+Switch Light_GF_Hallway_Ceiling 	"Ceiling" 		(GF_Hallway, Lights)
+Switch Light_GF_Office_Ceiling 		"Ceiling" 		(GF_Office, Lights)
+Switch Light_GF_Child_Ceiling 		"Ceiling" 		(GF_Child, Lights)
+Switch Light_GF_MstrBed_Ceiling		"Ceiling" 		(GF_MstrBed, Lights)
+Switch Light_GF_Living_Ceiling		"Ceiling" 		(GF_Living, Lights)
+Switch Light_GF_Family_Ceiling		"Ceiling" 		(GF_Family, Lights)
+Switch Light_GF_Kitchen_Ceiling		"Ceiling" 		(GF_Kitchen, Lights)
+Switch Light_GF_Dining_Ceiling		"Ceiling" 		(GF_Dining, Lights)
+
+Switch Light_Outside_Frontdoor 		"Front Door"	(Outside, Lights)
+Switch Light_Outside_Carport 		"Car Port" 		(Outside, Lights)
+Switch Light_Outside_Terrace 		"Back Yard"		(Outside, Lights)
+
+/* Heating */
+Switch Heating_GF_MainBath 	"Bath Room 1"	<heating>	(GF_MainBath, Heating)
+Switch Heating_GF_BoysBath 	"Bath Room 2" 	<heating>	(GF_BoysBath, Heating)
+Switch Heating_GF_Hallway 	"Hallway"	 	<heating>	(GF_Hallway, Heating)
+Switch Heating_GF_Office 	"Office" 		<heating>	(GF_Office, Heating)
+Switch Heating_GF_Child 	"Boy's Room" 	<heating>	(GF_Child, Heating)
+Switch Heating_GF_MstrBed 	"Master Bedroom"<heating>	(GF_MstrBed, Heating)
+Switch Heating_GF_Living 	"Living room" 	<heating>	(GF_Living, Heating)
+Switch Heating_GF_Family 	"Family room" 	<heating>	(GF_Family, Heating)
+Switch Heating_GF_Kitchen 	"Kitchen" 		<heating>	(GF_Kitchen, Heating)
+Switch Heating_GF_Dining 	"Dining Room"	<heating>	(GF_Dining, Heating)
+
+
+/* Indoor Temperatures */
+Number Temperature_GF_MainBath 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_MainBath)
+Number Temperature_GF_BoysBath 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_BoysBath)
+Number Temperature_GF_Hallway 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Hallway)
+Number Temperature_GF_Office 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Office)
+Number Temperature_GF_Child 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Child)
+Number Temperature_GF_MstrBed	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_MstrBed)
+Number Temperature_GF_Living 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Living)
+Number Temperature_GF_Family 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Family)
+Number Temperature_GF_Kitchen 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Kitchen)
+Number Temperature_GF_Dining 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Dining)
+
+
+/* Windows */
+Contact Window_GF_MainBath 		"Bath Room 1 [MAP(en.map):%s]"		(GF_Bath, Windows)
+Contact Window_GF_MstrBed 		"Bedroom [MAP(en.map):%s]"			(GF_MstrBed, Windows)
+
+Group Weather_Chart													(Weather)
+Group Weather_Humidity_Chart										(Weather)
+Group Weather_Rain_Chart											(Weather)
+
+/* Temperature */
+Number Weather_Temperature_Feel	"Outside Temperature Feel [%.2f °F]"	<temperature> (Weather_Chart) {weather="locationId=Home, type=temperature, property=feel, unit=fahrenheit"}
+Number Weather_Temperature 		"Outside Temperature [%.2f °F]"			<temperature> (Weather_Chart) {weather="locationId=Home, type=temperature, property=current, unit=fahrenheit"}
+Number Weather_Dew_Point		"Dew Point [%.2f °F]"					<temperature> (Weather) {weather="locationId=Home, type=temperature, property=dewpoint, unit=fahrenheit"}
+
+/* Atmosphere */
+Number	Weather_Humidity		"Outside Humidity [%d %%]"	<temperature> (Weather_Humidity_Chart) {weather="locationId=Home, type=atmosphere, property=humidity"}
+Number  Weather_Visibility_Mph	"Visibility [%.2f mi]"		<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=visibility, unit=mph"}
+Number  Weather_Pressure		"Pressure [%.2f mb]"		<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=pressure"}
+Number  Weather_Pressure_Inches	"Pressure [%.2f in]"		<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=pressure, unit=inches"}
+String  Weather_Pressure_Trend	"Pressure Trend [%s]"		<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=pressureTrend"}
+Number  Weather_Ozone			"Ozone [%d ppm]"			<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=ozone"}
+Number	Weather_UV_Index		"UV Index [%d]"		<temperature> (Atmosphere) {weather="locationId=Home, type=atmosphere, property=uvIndex, scale=0"}
+
+/* Forecast for Tomorrow */
+
+/* Clouds */
+Number   Weather_Clouds   "Clouds [%.0f %%]"   {weather="locationId=Home, type=clouds, property=percent"}
+
+/* Condition */
+String		Weather_Forecast					"Forecast [%s]"		<temperature> (Condition) {weather="locationId=Home, type=condition, property=text"}
+String		Weather_Forecast_Condition_ID		"Condition id [%s]"	<temperature> (Condition) {weather="locationId=Home, type=condition, property=id"}
+DateTime	Weather_Forecast_ObservationTime	"Observation time [%1$tA, %1$tb %1$td, %1$tY %1$tH:%1$tM]"	<temperature> (Condition) {weather="locationId=Home, type=condition, property=observationTime"}
+DateTime	Weather_Forecast_LastUpdate			"Last update [%1$tA, %1$tb %1$td, %1$tY %1$tH:%1$tM]"	<temperature> (Condition) {weather="locationId=Home, type=condition, property=lastUpdate"}
+String		Weather_Forecast_CommonId			"Common id [%s]"	<temperature> (Condition) {weather="locationId=Home, type=condition, property=commonId"}
+String		CommonCondition						"[MAP(weather_en.map):%s]"	<temperature> (Condition) {weather="locationId=Home, type=condition, property=commonId"}
+DateTime	ObservationTime						"[%1$tm/%1$td/%1$tY %1$tH:%1$tM]" {weather="locationId=Home, type=condition, property=observationTime"}
+
+/* Sample Weather Layout */
+Number   Pressure 		{weather="locationId=Home, type=atmosphere, property=pressure, scale=1, unit=inches"}
+Number   Current_Temp	{weather="locationId=Home, type=temperature, property=current, scale=1, unit=fahrenheit"}
+
+DateTime Forecast_Day_0  "Day [%1$tA]" <temperature> {weather="locationId=Home, forecast=0, type=condition, property=observationTime"}
+DateTime Forecast_Day_1  "Day [%1$tA]" <temperature> {weather="locationId=Home, forecast=1, type=condition, property=observationTime"}
+DateTime Forecast_Day_2  "Day [%1$tA]" <temperature> {weather="locationId=Home, forecast=2, type=condition, property=observationTime"}
+
+Number   Temp_Max_0		"High [%.2f °F]" <temperature> {weather="locationId=Home, forecast=0, type=temperature, property=max, scale=0, unit=fahrenheit"}
+Number   Temp_Max_1		"High [%.2f °F]" <temperature> {weather="locationId=Home, forecast=1, type=temperature, property=max, scale=0, unit=fahrenheit"}
+Number   Temp_Max_2		"High [%.2f °F]" <temperature> {weather="locationId=Home, forecast=2, type=temperature, property=max, scale=0, unit=fahrenheit"}
+
+Number   Temp_Min_0		"Low [%.2f °F]" <temperature> {weather="locationId=Home, forecast=0, type=temperature, property=min, scale=0, unit=fahrenheit"}
+Number   Temp_Min_1		"Low [%.2f °F]" <temperature> {weather="locationId=Home, forecast=1, type=temperature, property=min, scale=0, unit=fahrenheit"}
+Number   Temp_Min_2		"Low [%.2f °F]" <temperature> {weather="locationId=Home, forecast=2, type=temperature, property=min, scale=0, unit=fahrenheit"}
+
+String	 Weather_Forecast_0	"Forecast [%s]" <temperature> {weather="locationId=Home, forecast=0, type=condition, property=text"}
+String	 Weather_Forecast_1	"Forecast [%s]" <temperature> {weather="locationId=Home, forecast=1, type=condition, property=text"}
+String	 Weather_Forecast_2	"Forecast [%s]" <temperature> {weather="locationId=Home, forecast=2, type=condition, property=text"}
+
+/* Precipitation */
+//Number   Weather_Rain          "Rain [%.2f mm/h]"   <selfRain> (Precipitation) {weather="locationId=Home, type=precipitation, property=rain"}
+Number   Weather_Rain_Inches   "Rain [%.2f in/h]"   <selfRain> (Precipitation, Weather_Rain_Chart) {weather="locationId=Home, type=precipitation, property=rain, unit=inches"}
+//Number   Weather_Snow          "Snow [%.2f mm/h]"   <selfRain> (Precipitation) {weather="locationId=Home, type=precipitation, property=snow"}
+//Number   Weather_Snow_Inches   "Snow [%.2f in/h]"   <selfRain> (Precipitation) {weather="locationId=Home, type=precipitation, property=snow, unit=inches"}
+Number   Weather_Precip_Probability   "Precip probability [%d %%]"   <selfRain> (Precipitation) {weather="locationId=Home, type=precipitation, property=probability"}
+
+/* Wind */
+//Number   Weather_Wind_Speed           "Windspeed KM/H [%.2f km/h]"    <selfWind> (Wind) {weather="locationId=Home, type=wind, property=speed"}
+//Number   Weather_Wind_Speed_Beaufort  "Windspeed Beaufort [%d]"  <selfWind> (Wind) {weather="locationId=Home, type=wind, property=speed, unit=beaufort"}
+//Number   Weather_Wind_Speed_Knots     "Windspeed Knots [%.2f kn]"      <selfWind> (Wind) {weather="locationId=Home, type=wind, property=speed, unit=knots"}
+//Number   Weather_Wind_Speed_Mps       "Windspeed MP/S [%.2f mps]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=speed, unit=mps"}
+Number   Weather_Wind_Speed_Mph       "Windspeed MP/H [%.2f mph]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=speed, unit=mph"}
+String   Weather_Wind_Direction       "Wind direction [%s]"      <selfWind> (Wind) {weather="locationId=Home, type=wind, property=direction"}
+Number   Weather_Wind_Degree          "Wind degree [%.0f °]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=degree"}
+//Number   Weather_Wind_Gust            "Wind gust [%.2f km/h]"    <selfWind> (Wind) {weather="locationId=Home, type=wind, property=gust"}
+//Number   Weather_Wind_Gust_Beaufort   "Wind gust Beaufort [%d]"  <selfWind> (Wind) {weather="locationId=Home, type=wind, property=gust, unit=beaufort"}
+//Number   Weather_Wind_Gust_Knots      "Wind gust Knots [%.2f kn]"      <selfWind> (Wind) {weather="locationId=Home, type=wind, property=gust, unit=knots"}
+//Number   Weather_Wind_Gust_Mps        "Wind gust MP/S [%.2f mps]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=gust, unit=mps"}
+Number   Weather_Wind_Gust_Mph        "Wind gust MP/H [%.2f mph]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=gust, unit=mph"}
+//Number   Weather_Wind_Chill           "Wind chill [%.2f °C]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=chill"}
+Number   Weather_Wind_Chill_F         "Wind chill [%.2f °F]"     <selfWind> (Wind) {weather="locationId=Home, type=wind, property=chill, unit=fahrenheit"}
+
+/* weather station (only Wunderground and Hamweather), needs version 1.7 of the binding */
+String   Weather_Station_Name         "Station Name [%s]"        {weather="locationId=Home, type=station, property=name"}
+String   Weather_Station_Id           "Station Id [%s]"          {weather="locationId=Home, type=station, property=id"}
+Number   Weather_Station_Latitude     "Station Latitude [%.5f]"  {weather="locationId=Home, type=station, property=latitude, scale=6"}
+Number   Weather_Station_Longitude    "Station Longitude [%.5f]" {weather="locationId=Home, type=station, property=longitude, scale=6"}
+
+/* Chart Stuff */
+Number Weather_Temp_Max 		"Todays Maximum [%.2f °F]"		<temperature> (Weather_Chart)
+Number Weather_Temp_Min 		"Todays Minimum [%.2f °F]"		<temperature> (Weather_Chart)
+Number Weather_Chart_Period		"Chart Period"
+Number Weather_Humidity_Chart_Period		"Chart Period"
+Number Weather_Rain_Chart_Period			"Chart Period"
+DateTime Weather_LastUpdate		"Last Update [%1$ta %1$tR]"		<clock>
+
+
+/*
+Temperature [current=24.4,min=<null>,max=<null>,feel=24.4,dewpoint=24.0],
+Atmosphere [humidity=100,visibility=16.1,pressure=1018.0,pressureTrend=down,ozone=<null>,uvIndex=0],
+Clouds [percent=<null>],
+Condition [text=Partly Cloudy,lastUpdate=Mon Jun 29 22:53:38 EDT 2015,observationTime=Mon Jun 29 22:29:00 EDT 2015,id=<null>,icon=partlycloudy,commonId=partly-cloudy-day],
+Precipitation [rain=0.0,snow=0.0,probability=50],
+Wind [speed=1.6,direction=NNW,degree=343,gust=4.8,chill=<null>],
+Station [name=APRSWXNET, Winter Park, Florida,id=MAS140,latitude=28.60866,longitude=-81.313667],<null>]
+
+All Remaining Example Items
+// min and max values only available in forecasts
+Number   Temp_Min         "Temperature min [%.2f °C]"   {weather="locationId=Home, type=temperature, property=min"}
+Number   Temp_Min_F       "Temperature min [%.2f °F]"   {weather="locationId=Home, type=temperature, property=min, unit=fahrenheit"}
+Number   Temp_Max         "Temperature max [%.2f °C]"   {weather="locationId=Home, type=temperature, property=max"}
+Number   Temp_Max_F       "Temperature max [%.2f °F]"   {weather="locationId=Home, type=temperature, property=max, unit=fahrenheit"}
+String   Temp_MinMax      "Min/Max [%s °C]"             {weather="locationId=Home, type=temperature, property=minMax"}
+String   Temp_MinMax_F    "Min/Max [%s °F]"             {weather="locationId=Home, type=temperature, property=minMax, unit=fahrenheit"}
+ */
+
+/* NTP binding demo item */
+DateTime	Date				"Date [%1$tA, %1$tb %1$td, %1$tY]"	<calendar>	{ ntp="America/New_York:en_US" }
+
+/* Demo items */
+Switch DemoSwitch				"Switch"
+Dimmer DimmedLight				"Dimmer [%d %%]"		<slider>
+Color  RGBLight					"RGB Light"				<slider>
+//Rollershutter DemoShutter	 	"Roller Shutter"
+/*Dimmer DemoBlinds			 	"Blinds [%d %%]"		<rollershutter>*/
+//Number Scene_General			"Scene"					<sofa>
+Number Radio_Station			"Radio"					<network>
+Dimmer Volume 					"Volume [%.1f %%]"
+//Number Temperature_Setpoint		"Temperature [%.1f °C]" <temperature>
+
+//Switch MyMobile                                           { bluetooth="98F0AB35A576" }
+//String UnknownDevices    "Unknown Devices in Range: [%s]" { bluetooth="?" }
+//Number NoOfPairedDevices "Paired Devices in Range: [%d]"  { bluetooth="!" }
+
+/* Locations */
+Location HomeLocation			"Winter Park, Florida"
+
+String Location_Doug_Phone									<phone> (DougsPhone) {mqtt="<[mymosquitto:owntracks/Doug/iphone4s:state:JS(mqttitude-coordinates.js)]"}
+String mqttPositionDougRaw		"Doug's Last MQTT Report (Raw) [%s]"	<phone> (DougsPhone) {mqtt="<[mymosquitto:owntracks/Doug/iphone4s:state:default]"}
+Number mqttDougLatitude			"Doug's Latitude [%.5f]"	<phone> (DougsPhone)
+Number mqttDougLongitude 		"Doug's Longitude [%.5f]"	<phone> (DougsPhone)
+String mqttDougAccuracy 		"Doug's Accuracy [%s]"		<phone> (DougsPhone)
+Number mqttDougiPhone4sBattery 	"Doug's Battery [%d %%]"	<phone> (DougsPhone)
+Number mqttDougiPhone4sAlt 		"Doug's Altitude [%s]"		<phone> (DougsPhone)
+String mqttDougiPhone4sTid 		"Doug's Phone Id [%s]"		<phone> (DougsPhone)
+DateTime mqttDougLastUpdate	"Doug's Phone Last Update [%1$ta %1$tR]"		<clock> (DougsPhone)
+
+Switch  PresenceDoug_PhoneMqttHome   "Doug @ Home"  { mqttitude="mymosquitto:owntracks/Doug/iphone4s/event:Home" }
+
+//***DD-WRT Presence***
+String DDWRTDeviceCount "DD-WRT Devices Connected [%s]" //Total Number of Monitored Devices Connected
+Switch	dougPhone
+Switch dougiPad
+Switch debPhone
+//Switch SamsungTV
+//Switch KidIPAD
+
+
+/* Astro Items Settings */
+//Sun Examples
+
+// rise and set
+DateTime Sunrise_Time  "Sunrise [%1$ta %1$tH:%1$tM]"  {astro="planet=sun, type=rise, property=start"}
+DateTime Sunset_Time   "Sunset [%1$ta %1$tH:%1$tM]"   {astro="planet=sun, type=set, property=end"}
+
+// zodiac
+DateTime Zodiac_Start   "Zodiac Start [%1$tb %1$td, %1$tY]"   {astro="planet=sun, type=zodiac, property=start"}
+DateTime Zodiac_End     "Zodiac End [%1$tb %1$td, %1$tY]"     {astro="planet=sun, type=zodiac, property=end"}
+String   Zodiac_Sign    "Current Zodiac [%s]"                {astro="planet=sun, type=zodiac, property=sign"}
+
+// season
+String Season_Name      "Season [%s]"                             {astro="planet=sun, type=season, property=name"}
+DateTime Season_Spring  "Spring [%1$tb %1$td, %1$tY]"  {astro="planet=sun, type=season, property=spring"}
+DateTime Season_Summer  "Summer [%1$tb %1$td, %1$tY]"  {astro="planet=sun, type=season, property=summer"}
+DateTime Season_Autumn  "Autumn [%1$tb %1$td, %1$tY]"  {astro="planet=sun, type=season, property=autumn"}
+DateTime Season_Winter  "Winter [%1$tb %1$td, %1$tY]"  {astro="planet=sun, type=season, property=winter"}
+
+
+// eclipse
+DateTime Sun_Eclipse_Total   "Sun Total Eclipse [%1$tb %1$td, %1$tY %1$tH:%1$tM]"   {astro="planet=sun, type=eclipse, property=total"}
+DateTime Sun_Eclipse_Partial "Sun Partial Eclipse [%1$tb %1$td, %1$tY %1$tH:%1$tM]" {astro="planet=sun, type=eclipse, property=partial"}
+DateTime Sun_Eclipse_Ring    "Sun Ring Eclipse [%1$tb %1$td, %1$tY %1$tH:%1$tM]"    {astro="planet=sun, type=eclipse, property=ring"}
+
+//Moon Examples
+// rise, set
+DateTime Moonrise_Time   "Moonrise [%1$ta %1$tH:%1$tM]"  {astro="planet=moon, type=rise, property=start"}
+DateTime Moonset_Time    "Moonset [%1$ta %1$tH:%1$tM]"   {astro="planet=moon, type=set, property=end"}
+
+// phase
+DateTime  Moon_First_Quarter "First Quarter [%1$tb %1$td, %1$tY]" {astro="planet=moon, type=phase, property=firstQuarter"}
+DateTime  Moon_Third_Quarter "Third Quarter [%1$tb %1$td, %1$tY]" {astro="planet=moon, type=phase, property=thirdQuarter"}
+DateTime  Moon_Full          "Full moon [%1$tb %1$td, %1$tY]"     {astro="planet=moon, type=phase, property=full"}
+DateTime  Moon_New           "New moon [%1$tb %1$td, %1$tY]"      {astro="planet=moon, type=phase, property=new"}
+Number    Moon_Age           "Moon Age [%.0f days]"        {astro="planet=moon, type=phase, property=age"}
+Number    Moon_Illumination  "Moon Illumination [%.1f %%]" {astro="planet=moon, type=phase, property=illumination"}
+String    Moon_Phase_Name    "Moonphase [%s]"              {astro="planet=moon, type=phase, property=name"}
+
+// eclipse
+DateTime Moon_Eclipse_Total    "Moon Total Eclipse [%1$tb %1$td, %1$tY %1$tH:%1$tM]"    {astro="planet=moon, type=eclipse, property=total"}
+DateTime Moon_Eclipse_Partial  "Moon Partial Eclipse [%1$tb %1$td, %1$tY %1$tH:%1$tM]"  {astro="planet=moon, type=eclipse, property=partial"}
+
+
+
+/* Mail Box Switch Stuff */
+//Switch itm_mailbox "Switch" (ALL)
+//Number itm_mailboxmqtt "Mailbox RSSI [%.1f]" (ALL) {mqtt="<[mymosquitto:4124:state:default]"}
+//Number itm_mailboxcnt "Mail Count [%.1f]" (ALL) {mqtt="<[mymosquitto:4122:state:default]"}
+//DateTime itm_mailbox_time "Mailbox Last Updated [%1$tA, %1$tm/%1$td, %1$tI:%1$tM %1$tp]"
+//Number itm_mailboxbat "Mailbox Battery [%.1f Volt]" (ALL) {mqtt="<[mymosquitto:4123:state:default]"}
+
+/* Rollershutters */
+/*
+Switch Shutter_all (Shutters)
+
+Rollershutter Shutter_GF_BoysBath	 		"Bath Room 2"	(GF_BoysBath, Shutters)
+Rollershutter Shutter_GF_Kitchen 		"Kitchen"		(GF_Kitchen, Shutters)
+Rollershutter Shutter_GF_Living 		"Living room"	(GF_Living, Shutters)
+Rollershutter Shutter_GF_MstrBed 		"Bedroom"		(GF_MstrBed, Shutters)
+Rollershutter Shutter_GF_MainBath 			"Bath Room 1"	(GF_MainBath, Shutters)
+Rollershutter Shutter_GF_Office_Window	"Office Window"	(GF_Office, Shutters)
+Rollershutter Shutter_GF_Office_Door 	"Office Door"	(GF_Office, Shutters)
+*/

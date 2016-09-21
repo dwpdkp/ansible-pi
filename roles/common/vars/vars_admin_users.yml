@@ -1,0 +1,41 @@
+---
+# vars file for admin_users
+
+# Create a group for every user and make that their primary group
+users_create_per_user_group: true
+
+# If we're not creating a per-user group, then this is the group all users
+# belong to
+users_group: users
+
+# The default shell for a user if none is specified
+users_default_shell: /bin/bash
+
+# Create home dirs for new users? Set this to false if you manage home
+# directories in some other way.
+users_create_homedirs: true
+
+# Lists of users to create and delete
+admin_users:
+- name: root
+  password: "$6$rounds=656000$QilAwbGMLTxro6Jy$2VlXKB0RJjwpTBUeajjrUaNaNzXaQgIiq0KAIW2j6yKfunacalsCWKH4cIugQueGqh7wsq5nWnL0bAL5zy8DY/"
+  state: "present"
+  groups: "root"
+  comment: root
+
+- name: pi
+  password: "$6$rounds=656000$q3uEjoXyUI1vLi.q$wWPy.CTJkYwScsais63gcWaDfzzVGbxGMkd3VOerLq29n1Lyv97IKDi6pU91bpNHeF3HtXNAXIMiYdm2artQi/"
+  state: "present"
+  groups: "adm"
+  comment: pi
+
+- name: dpearson
+  password: "$6$rounds=656000$mYCqB1raA2Di20AN$Nlqsl.G2YtbD0E.YBEHfWIpJfpliIigZ6EDnVYhvQdig/cC6KxSloHftJm4mNHV3wSrOPgqUc.XgmVi0HWma9."
+  state: "present"
+  groups: "adm"
+  comment: "Douglas Pearson"
+  pub_ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3vzy4WRF+qteQadszmPoV2PZA+Teqa+phMADT7KGVMcbMUvoR5Bwz48yaLlaHVXqJKJtQ1vXNcJYfCDjMdx1A2+2ucP+sVr3c5HA3bRqCTVbYwu/muz8SaguiIbtztllE4FjzM+9ZCl2dZBA4Xf1/mNdcwzw7j5TRhGQvvjQVL+wgeBWOM7h6D9MEnGeoXNC20cgqat32ziqeZfO/n0R8w0dQLzLQt3DEi4GXMkBMpwqPqNjY7cCttYnnZknSVlMm3wCtrl7c71zSF0pNHcNc6YkOqokvSAl9WF079i578ekaV6NI4YFoe95jza8bUOmwUypCJ5LsxvGu/iJq3Zp7 doug@Dougs-MacBook-Pro.local"
+
+users_deleted: []
+
+groups_to_create: []

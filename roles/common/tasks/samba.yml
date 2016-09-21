@@ -1,0 +1,93 @@
+---
+- name: Samba | Install Samba
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ samba_packages }}"
+
+- name: Samba | Copy the Customize smb.conf file
+  template:
+    src: samba/etc_samba_smb.conf.j2
+    dest: /etc/samba/smb.conf
+    backup: yes
+  notify:
+    - restart server
+
+- name: Samba | Create Samba users restricted group
+  group:
+    name: "{{ samba_group_name }}"
+    state: present
+
+- name: Samba | Add the User(s) to Samba group
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ samba_group_name }}"
+    append: yes
+  with_items: "{{ samba_users }}"
+
+- name: Samba | "Check that {{ public_share_path }} exist"
+  stat:
+    path: "{{ public_share_path }}"
+  register: public_dir_exists
+
+- name: Samba | "Create {{ public_share_path }} directory"
+  file:
+    state: directory
+    path: "{{ public_share_path }}"
+    owner: nobody
+    group: nogroup
+    mode: 0755
+    recurse: yes
+  when: public_dir_exists.stat.exists == False
+
+- name: Samba | "Check that {{ private_share_path }} exist"
+  stat:
+    path: "{{ private_share_path }}"
+  register: private_dir_exists
+
+- name: Samba | "Create {{ private_share_path }} directory"
+  file:
+    state: directory
+    path: "{{ private_share_path }}"
+    owner: root
+    group: "{{ samba_group_name }}"
+    mode: 1770
+  when: private_dir_exists.stat.exists == False
+
+- name: Samba | "Check that {{ openhab_home_path }} exist"
+  stat:
+    path: "{{ openhab_home_path }}"
+  register: openhab_home_dir_exists
+
+- name: Samba | "Create {{ openhab_home_path }} directory"
+  file:
+    state: directory
+    path: "{{ openhab_home_path }}"
+    owner: root
+    group: "{{ samba_group_name }}"
+    mode: 1770
+  when: openhab_home_dir_exists.stat.exists == False
+
+- name: Samba | "Check that {{ openhab_config_path }} exist"
+  stat:
+    path: "{{ openhab_config_path }}"
+  register: openhab_config_dir_exists
+
+- name: Samba | "Create {{ openhab_config_path }} directory"
+  file:
+    state: directory
+    path: "{{ openhab_config_path }}"
+    owner: root
+    group: "{{ samba_group_name }}"
+    mode: 1770
+  when: openhab_config_dir_exists.stat.exists == False
+
+- name: Samba | Create Samba Password for User(s)
+  shell: "(echo {{ item.smbpasswd }}; echo {{ item.smbpasswd }}) | smbpasswd -s -a {{ item.name }}"
+  with_items: "{{ samba_users }}"
+
+- name: Samba | Enable the smdb Service
+  service: name=smbd enabled=yes
+
+- name: Samba | Enable the nmdb Service
+  service: name=nmbd enabled=yes

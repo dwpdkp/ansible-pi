@@ -1,0 +1,208 @@
+sitemap pearson label="Pearson House"
+{
+	Frame {
+		Group item=gGF label="Ground Floor" icon="groundfloor"
+		Group item=Outside label="Outside" icon="garden"
+	}
+	Frame label="Weather" {
+		Text item=Weather_Temperature_Feel valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>80="red",>59="green",>40="blue",<=39="blue"] {
+			Frame label="Current Temperatures"{
+				Text item=Weather_Temperature valuecolor=[>80="red",>59="green",>40="blue",<=39="blue"]
+				Text item=Weather_Temp_Max valuecolor=[>80="red",>59="green",>40="blue",<=39="blue"]
+				Text item=Weather_Temp_Min valuecolor=[>80="red",>59="green",>40="blue",<=39="blue"]
+				Text item=Weather_Dew_Point
+				Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120="orange", Weather_LastUpdate>300="red"]
+			}
+			Frame label="Todays Forecast"{
+				Text item=Forecast_Day_0
+				Text item=Temp_Max_0
+				Text item=Temp_Min_0
+				Text item=Weather_Forecast_0
+			}
+			Frame label="Tomorrows Forecast"{
+				Text item=Forecast_Day_1
+				Text item=Temp_Max_1
+				Text item=Temp_Min_1
+				Text item=Weather_Forecast_1
+			}
+			Frame label="Next Days Forecast"{
+				Text item=Forecast_Day_2
+				Text item=Temp_Max_2
+				Text item=Temp_Min_2
+				Text item=Weather_Forecast_2
+			}
+			Frame label="Current Atmosphere Conditions"{
+				Text item=Weather_Humidity
+				Text item=Weather_Visibility_Mph
+				//Text item=Weather_Pressure
+				Text item=Weather_Pressure_Inches
+				Text item=Weather_Pressure_Trend
+				//Text item=Weather_Ozone
+				Text item=Weather_UV_Index
+			}
+			Frame label="Clouds" {
+				Text item=Weather_Clouds
+			}
+			Frame label="Weather Station Info" {
+				Text item=Weather_Station_Name
+				Text item=Weather_Station_Id
+				Text item=Weather_Station_Latitude
+				Text item=Weather_Station_Longitude
+			}
+			Frame label="Wind & Rain Info" {
+			Group item=Wind label="Wind Conditions" icon="wind"
+			Group item=Precipitation label="Rain Conditions" icon="rain"
+			}
+			/* Charts */
+			Frame {
+				Switch item=Weather_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week", 3="Month"]
+				Chart item=Weather_Chart period=h refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
+				Chart item=Weather_Chart period=D refresh=30000 visibility=[Weather_Chart_Period==1]
+				Chart item=Weather_Chart period=W refresh=30000 visibility=[Weather_Chart_Period==2]
+				Chart item=Weather_Chart period=M refresh=30000 visibility=[Weather_Chart_Period==3]
+			}
+			Frame {
+				Switch item=Weather_Humidity_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week", 3="Month"]
+				Chart item=Weather_Humidity_Chart period=h refresh=6000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
+				Chart item=Weather_Humidity_Chart period=D refresh=30000 visibility=[Weather_Humidity_Chart_Period==1]
+				Chart item=Weather_Humidity_Chart period=W refresh=30000 visibility=[Weather_Humidity_Chart_Period==2]
+				Chart item=Weather_Humidity_Chart period=M refresh=30000 visibility=[Weather_Humidity_Chart_Period==3]
+			}
+/*			Frame {
+				Switch item=Weather_Rain_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week", 3="Month"]
+				Chart item=Weather_Rain_Chart period=h refresh=6000 visibility=[Weather_Rain_Chart_Period==0, Weather_Rain_Chart_Period=="Uninitialized"]
+				Chart item=Weather_Rain_Chart period=D refresh=30000 visibility=[Weather_Rain_Chart_Period==1]
+				Chart item=Weather_Rain_Chart period=W refresh=30000 visibility=[Weather_Rain_Chart_Period==2]
+				Chart item=Weather_Rain_Chart period=M refresh=30000 visibility=[Weather_Rain_Chart_Period==3]
+			}  */
+		}
+		Text item=Weather_Forecast valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>77="red",>59="green",>40="blue",<=39="blue"] //{
+/*			Frame label="Current Forecast" {
+				Webview url="/weather?locationId=Home&layout=example&iconset=colorful" height=7
+				Group item=Forecast_Day_0 label="Forecast Today"{
+					Text item=Forecast_Day_0
+					Text item=Temp_Max_0
+					Text item=Temp_Min_0
+				}
+				Group item=Forecast_Day_1 label="Forecast Tomorrow"{
+					Text item=Forecast_Day_1 label="Today"
+					Text item=Temp_Max_1 label="High"
+					Text item=Temp_Min_1 label="Low"
+				}
+				Group item=Forecast_Day_2 label="Forecast Next Day"{
+					Text item=Forecast_Day_2 label="Today"
+					Text item=Temp_Max_2 label="High"
+					Text item=Temp_Min_2 label="Low"
+				}
+			}*/
+		//}
+	}
+//	Frame label="DD-WRT Presence" {
+//		//DD-WRT Switches
+//		Text item=DDWRTDeviceCount {
+//			Switch item=dougPhone
+//			Switch item=debPhone
+//			Switch item=dougiPad
+//			Switch item=KidIPAD
+//		}
+//	}
+	Frame label="Astro Stuff"{
+		Text label="Sun Items" icon="sun" {
+			Text item=Sunrise_Time
+			Text item=Sunset_Time
+			Text item=Zodiac_Sign
+			Text item=Zodiac_Start
+			Text item=Zodiac_End
+			Text item=Sun_Eclipse_Total
+			Text item=Sun_Eclipse_Partial
+			Text item=Sun_Eclipse_Ring
+		}
+		Text label="Moon Items" icon="moon" {
+			Text item=Moonrise_Time
+			Text item=Moonset_Time
+			Text item=Moon_First_Quarter
+			Text item=Moon_Third_Quarter
+			Text item=Moon_Full
+			Text item=Moon_New
+			Text item=Moon_Age
+			Text item=Moon_Illumination
+			Text item=Moon_Phase_Name
+			Text item=Moon_Eclipse_Total
+			Text item=Moon_Eclipse_Partial
+		}
+		Text label="Season Items" {
+			Text item=Season_Name
+			Text item=Season_Spring
+			Text item=Season_Summer
+			Text item=Season_Autumn
+			Text item=Season_Winter
+		}
+	}
+	Frame label="Date" {
+		Text item=Date
+	}
+	Frame label="Doug's Phone" {
+		//Switch item=MyMobile
+		Switch item=PresenceDoug_PhoneMqttHome
+		Text item=mqttDougLastUpdate {
+		//Group item=DougsPhone label="Doug's Phone Stats" icon="phone"
+		Text item=mqttPositionDougRaw
+		Text item=mqttDougLatitude
+		Text item=mqttDougLongitude
+		Text item=mqttDougAccuracy
+		Text item=mqttDougiPhone4sBattery
+		Text item=mqttDougiPhone4sTid
+		Text item=mqttDougLastUpdate
+		}
+	}
+/*	Frame label="Map" {
+		Webview  url="/static/map.html"  height=15
+	} */
+/*  Frame label="Mailbox" {
+        Switch item=itm_mailbox label="Mailbox" mappings=[OFF="Off"]
+        Text item=itm_mailbox_time
+        Text item=itm_mailboxmqtt
+        Text item=itm_mailboxcnt
+        Text item=itm_mailboxbat
+    }*/
+/*	Frame label="Demo" {
+		Text label="Group Demo" icon="groundfloor" {
+			Switch item=Lights mappings=[OFF="All Off"]
+			Group item=Heating
+			Group item=Windows
+			Text item=Temperature
+		}
+		Text label="Widget Overview" icon="chart" {
+			Frame label="Binary Widgets" {
+				Switch item=DemoSwitch label="Toggle Switch"
+				Switch item=DemoSwitch label="Button Switch" mappings=[ON="On"]
+			}
+			Frame label="Discrete Widgets" {
+				Selection item=Scene_General label="Scene Selection" mappings=[0=off, 1=TV, 2=Dinner, 3=Reading]
+				Switch item=Scene_General label="Scene" mappings=[1=TV, 2=Dinner, 3=Reading]
+				Setpoint item=Temperature_Setpoint minValue=16 maxValue=28 step=0.5
+			}
+			Frame label="Percent-based Widgets" {
+				Slider item=DimmedLight switchSupport
+				Colorpicker item=RGBLight icon="slider"
+				Switch item=DemoShutter
+				Slider item=DemoBlinds
+			}
+
+
+		}
+		Text label="Multimedia" icon="video" {
+			Frame label="Radio Control" {
+				Selection item=Radio_Station mappings=[0=off, 1=HR3, 2=SWR3, 3=FFH]
+				Slider item=Volume
+			}
+			Frame label="Multimedia Widgets" {
+				Image url="http://localhost:8080/images/splash-ipad-h.png" label="openHAB" {
+					Text label="http://www.openHAB.org" icon="icon"
+				}
+				//Video url="http://demo.openhab.org/Hue.m4v"
+				//Webview url="http://heise-online.mobi/" height=8
+			}
+		}
+	} */
+}

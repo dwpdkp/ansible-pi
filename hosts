@@ -1,0 +1,3 @@
+[rpis]
+dougspi ansible_ssh_host=dougspi.local ansible_remote_user=pi
+

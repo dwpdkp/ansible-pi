@@ -1,0 +1,126 @@
+---
+# tasks file for openhab
+- include_vars: vault.yml
+
+- name: 'Add an Apt signing key, uses whichever key is at the URL'
+  apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=openhab state=present
+  become: true
+  notify: restart server
+
+- name: 'Add a mosquitto signing key, uses whichever key is at the URL'
+  apt_key: url=http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key state=present
+  become: true
+  notify: restart server
+
+- name: 'Add the openhab.list repo file to the /etc/apt/sources.list.d folder'
+  file: path=/etc/apt/sources.list.d/openhab.list state=touch mode="u=rw,g=r,o=r"
+  become: true
+  notify: restart server
+
+- name: 'Add the mosquitto-jessie.list repo file to the /etc/apt/sources.list.d folder'
+  get_url: url=http://repo.mosquitto.org/debian/mosquitto-jessie.list dest=/etc/apt/sources.list.d/mosquitto-jessie.list mode="u=rw,g=r,o=r"
+  become: true
+  notify: restart server
+
+- name: 'Update APT package cache'
+  action: apt update_cache=yes
+
+- name: 'Install OpenHAB'
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ openhab_pkgs }}"
+  become: true
+  notify: restart server
+
+- name: 'Copy the default cfg files to the remote server'
+  copy: src=files/openhab.cfg dest=/etc/openhab/configurations/openhab.cfg owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/logback.xml dest=/etc/openhab/configurations/users.cfg owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/items/pearson.items dest=/etc/openhab/configurations/items/pearson.items owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/db4o.persist dest=/etc/openhab/configurations/persistence/db4o.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/exec.persist dest=/etc/openhab/configurations/persistence/exec.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/logging.persist dest=/etc/openhab/configurations/persistence/logging.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/myopenhab.persist dest=/etc/openhab/configurations/persistence/myopenhab.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/mysql.persist dest=/etc/openhab/configurations/persistence/mysql.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/persistence/rrd4j.persist dest=/etc/openhab/configurations/persistence/rrd4j.persist owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/rules/pearson.rules dest=/etc/openhab/configurations/rules/pearson.rules owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/scripts/pearson.script dest=/etc/openhab/configurations/scripts/pearson.script owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/sitemaps/pearson.sitemap dest=/etc/openhab/configurations/sitemaps/pearson.sitemap owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/de.map dest=/etc/openhab/configurations/transform/de.map owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/en.map dest=/etc/openhab/configurations/transform/en.map owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/humidex_de.scale dest=/etc/openhab/configurations/transform/humidex_de.scale owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/humidex_fr.scale dest=/etc/openhab/configurations/transform/humidex_fr.scale owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/humidex.scale dest=/etc/openhab/configurations/transform/humidex.scale owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/mqttitude-coordinates.js dest=/etc/openhab/configurations/transform/mqttitude-coordinates.js owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/wunderground_icon_forecast.xsl dest=/etc/openhab/configurations/transform/wunderground_icon_forecast.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_forecast_high.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_forecast_high.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_forecast_low.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_forecast_low.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_forecast_text.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_forecast_text.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_humidity.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_humidity.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_pressure.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_pressure.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_temperature.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_temperature.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+- copy: src=files/transform/yahoo_weather_wind_speed.xsl dest=/etc/openhab/configurations/transform/yahoo_weather_wind_speed.xsl owner=openhab group=openhab mode="u=rw,g=rw,o=rw"
+  notify: restart server
+
+- name: Copy the uuid file
+  template:
+    src: uuid.j2
+    dest: /usr/share/openhab/webapps/static/uuid
+    owner: openhab
+    group: openhab
+    force: yes
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - restart server
+
+- name: Copy the secret file
+  template:
+    src: secret.j2
+    dest: /usr/share/openhab/webapps/static/secret
+    owner: openhab
+    group: openhab
+    force: yes
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - restart server
+
+- name: Copy the passwd file
+  template:
+    src: passwd.j2
+    dest: /etc/mosquitto/passwd
+    owner: root
+    group: root
+    force: yes
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - restart server
+
+- name: Copy the mosquitto.conf file
+  template:
+    src: mosquitto.conf.j2
+    dest: /etc/mosquitto/mosquitto.conf
+    owner: root
+    group: root
+    force: yes
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - restart server
+
+- name: Copy the users.cfg file
+  template:
+    src: users.cfg.j2
+    dest: /etc/openhab/configurations/users.cfg
+    owner: openhab
+    group: openhab
+    force: yes
+    mode: "u=rw,g=rw,o=rw"
+  notify:
+    - restart server
+
+- name: 'Update openhab defaults'
+  command: update-rc.d openhab defaults
+  become: true
+  notify: restart server
+
+- file: path=/etc/openhab owner=openhab group=openhab recurse=yes
+- file: path=/usr/share/openhab owner=openhab group=openhab recurse=yes

@@ -1,0 +1,24 @@
+---
+- include_vars: vault.yml
+
+# tasks file for openvpn
+- name: Openvpn | Install openvpn
+  apt:
+    name: openvpn
+    state: latest
+  notify: restart server
+
+- name: Openvpn | Copy privatvpn.conf template
+  template: src=templates/openvpn/privatvpn.conf.j2 dest={{ install_path }}/{{ pv_conf }} owner=root group=root mode=0744
+
+- name: Openvpn | Copy ca.crt
+  copy: src=files/openvpn/ca.crt dest="{{ install_path }}/{{ pv_cert }}" owner=root group=root mode=0744
+
+- name: Openvpn | Copy privatvpn.login template
+  template: src=templates/openvpn/privatvpn.login.j2 dest="{{ install_path }}/{{ pv_login }}" owner=root group=root mode=0744
+
+- name: Openvpn | Copy privatvpn script
+  copy: src=files/openvpn/privatvpn dest="/usr/bin/{{ pv_scr }}" owner=root group=root mode=0744
+
+- name: Openvpn | Create the openvpn log file
+  file: path=/var/log/openvpn.log state=touch mode="u=rw,g=r,o=r"
