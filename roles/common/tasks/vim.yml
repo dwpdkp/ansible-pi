@@ -8,11 +8,11 @@
 - name: Vim | Make sure vim is installed
   apt:
     name: vim
-    state: latest
-    update_cache: yes
+    state: present
+#    update_cache: yes
 
 - name: Vim | Make sure htop is installed
   apt:
     name: htop
-    state: latest
-    update_cache: yes
+    state: present
+#    update_cache: yes

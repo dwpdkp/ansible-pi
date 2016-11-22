@@ -13,12 +13,24 @@
   notify: restart server
 
 - name: 'Add the openhab.list repo file to the /etc/apt/sources.list.d folder'
-  file: path=/etc/apt/sources.list.d/openhab.list state=touch mode="u=rw,g=r,o=r"
+  shell: echo "deb http://dl.bintray.com/openhab/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/openhab.list
   become: true
   notify: restart server
 
 - name: 'Add the mosquitto-jessie.list repo file to the /etc/apt/sources.list.d folder'
   get_url: url=http://repo.mosquitto.org/debian/mosquitto-jessie.list dest=/etc/apt/sources.list.d/mosquitto-jessie.list mode="u=rw,g=r,o=r"
+  become: true
+  notify: restart server
+
+#- name: 'Add the openhab2.list repo file to the /etc/apt/sources.list.d folder'
+#  shell: echo 'deb http://dl.bintray.com/openhab/apt-repo2 testing main' | sudo tee /etc/apt/sources.list.d/openhab2.list
+#  become: true
+#  notify: restart server
+
+- name: 'Install apt-transport-https'
+  apt:
+    name: apt-transport-https
+    state: present
   become: true
   notify: restart server
 

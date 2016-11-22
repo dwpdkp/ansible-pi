@@ -5,7 +5,7 @@
     state: present
   with_items: "{{ samba_packages }}"
 
-- name: Samba | Copy the Customize smb.conf file
+- name: Samba | Copy the Customized smb.conf file
   template:
     src: samba/etc_samba_smb.conf.j2
     dest: /etc/samba/smb.conf
