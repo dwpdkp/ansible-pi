@@ -3,8 +3,8 @@
 
   hosts: rpis
   roles:
-#    - common
-#    - openhab
+    - common
+    - openhab
     - mysql
 #    - sonarr
   remote_user: ansible
