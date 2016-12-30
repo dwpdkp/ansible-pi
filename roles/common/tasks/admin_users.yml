@@ -30,6 +30,12 @@
   with_items: "{{ admin_users }}"
   tags: ['users','configuration']
 
+- name: Add user public SSH key
+  authorized_key: user="{{ item.name }}" key="{{item.ssh_key_rsa}}"
+  with_items: "{{ admin_users }}"
+  become: yes
+  no_log: true
+
 - name: Admin Users | Deleted user removal
   user: name="{{ item.name }}" state=absent
   with_items: "{{ users_deleted }}"
