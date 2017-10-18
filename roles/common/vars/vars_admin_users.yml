@@ -34,7 +34,7 @@ admin_users:
   state: "present"
   groups: "adm"
   comment: "Douglas Pearson"
-  ssh_key_rsa: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3vzy4WRF+qteQadszmPoV2PZA+Teqa+phMADT7KGVMcbMUvoR5Bwz48yaLlaHVXqJKJtQ1vXNcJYfCDjMdx1A2+2ucP+sVr3c5HA3bRqCTVbYwu/muz8SaguiIbtztllE4FjzM+9ZCl2dZBA4Xf1/mNdcwzw7j5TRhGQvvjQVL+wgeBWOM7h6D9MEnGeoXNC20cgqat32ziqeZfO/n0R8w0dQLzLQt3DEi4GXMkBMpwqPqNjY7cCttYnnZknSVlMm3wCtrl7c71zSF0pNHcNc6YkOqokvSAl9WF079i578ekaV6NI4YFoe95jza8bUOmwUypCJ5LsxvGu/iJq3Zp7 doug@Dougs-MacBook-Pro.local"
+  ssh_key_rsa: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIG0fvq7eTShh4xTgr1uB8WYoGRg2+6hHgvA/yHOzLk2YfGpRoRnh7eeaX4FekMq2p0xNX0rdFBI56mC44VQk0/8Lqap3pZStdXW5nHQ9LIrr6yIXgwOhJEtM+9TWaTHXK/D9vdLIiEspdE1+iF+7fqicxtul3KQeZkMt3k+HigZNneOhBx/vgkHRrJ2baTX6cDhvdh9Ir2cfJP4SuwiVbbCeQJyZLv2VluFs4L1wp4PdbbicOBmNByMDOGuhr4JuuGhl5n5Kbv7dbNhUfORQkkbmaSKPt4ITTG0khuTFcISltHItSNQZPUjTyrmvOw/OY6OCpbWxAC8Zwrsu45nwH doug@dougspi"
 
 users_deleted: []
 

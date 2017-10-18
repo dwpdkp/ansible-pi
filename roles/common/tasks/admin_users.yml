@@ -12,7 +12,8 @@
   group: name="{{ item.name }}"
          gid="{{ item.uid | default(omit) }}"
   with_items: "{{ admin_users }}"
-  when: "{{ users_create_per_user_group }}"
+  when: users_create_per_user_group
+  no_log: true
   tags: ['users','configuration']
 
 - name: Admin Users | Admin User creation
@@ -28,6 +29,7 @@
         update_password=always
         state="{{ item.state }}"
   with_items: "{{ admin_users }}"
+  no_log: true
   tags: ['users','configuration']
 
 - name: Add user public SSH key
@@ -35,6 +37,7 @@
   with_items: "{{ admin_users }}"
   become: yes
   no_log: true
+  when: item.ssh_key_rsa is defined
 
 - name: Admin Users | Deleted user removal
   user: name="{{ item.name }}" state=absent
@@ -44,5 +47,5 @@
 - name: Admin Users | Deleted per-user group removal
   group: name="{{ item.name }}" state=absent
   with_items: "{{ users_deleted }}"
-  when: "{{ users_create_per_user_group }}"
+  when: users_create_per_user_group
   tags: ['users','configuration']

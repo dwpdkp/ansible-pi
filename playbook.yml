@@ -4,8 +4,16 @@
   hosts: rpis
   roles:
     - common
-    - openhab
-    - mysql
+#    - openhab
+#    - mysql
 #    - sonarr
   remote_user: ansible
   become: yes
+  vars:
+    update_admin_users: yes
+    upgrade_all_apt_pkgs: no
+    add_mount_for_usb: yes
+    install_vim: yes
+    configure_wifi: yes
+    configure_samba: yes
+    configure_openvpn: yes
