@@ -73,24 +73,12 @@
   directory mask=0777
   public=no
 
-[OpenHAB Home]
-  comment= OpenHAB Home
-  path=/usr/share/openhab
-  valid users = @{{ samba_group_name }}
+[media]
+  comment= Media
+  path=/media
   browseable=Yes
   writeable=Yes
   only guest=no
   create mask=0777
   directory mask=0777
   public=no
-
-[OpenHAB Config]
-  comment= OpenHAB Site Config
-  path=/etc/openhab
-  valid users = @{{ samba_group_name }}
-  browseable=Yes
-  writeable=Yes
-  only guest=no
-  create mask=0777
- directory mask=0777
- public=no

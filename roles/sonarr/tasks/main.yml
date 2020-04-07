@@ -15,7 +15,7 @@
   apt_key: keyserver=keyserver.ubuntu.com id=FDA5DFFC
 
 
-- name: 'Add the openhab.list repo to the /etc/apt/sources.list.d folder'
+- name: 'Add the sonarr.list repo to the /etc/apt/sources.list.d folder'
   command: echo "deb https://apt.sonarr.tv/ master main" | sudo tee /etc/apt/sources.list.d/sonarr.list
   become: true
 
@@ -32,4 +32,3 @@
 
 - name: 'Create the init.d script file'
   copy: src=files/nzbdrone dest=/etc/init.d/nzbdrone owner=root group=root mode=0755
-

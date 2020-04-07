@@ -1,4 +1,6 @@
 ---
+- include_vars: samba-vault.yml
+
 - name: Samba | Install Samba
   apt:
     name: "{{ item }}"

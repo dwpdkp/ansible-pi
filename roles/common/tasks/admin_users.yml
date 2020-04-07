@@ -13,7 +13,7 @@
          gid="{{ item.uid | default(omit) }}"
   with_items: "{{ admin_users }}"
   when: users_create_per_user_group
-  no_log: true
+  no_log: True
   tags: ['users','configuration']
 
 - name: Admin Users | Admin User creation
@@ -29,14 +29,14 @@
         update_password=always
         state="{{ item.state }}"
   with_items: "{{ admin_users }}"
-  no_log: true
+  no_log: True
   tags: ['users','configuration']
 
 - name: Add user public SSH key
   authorized_key: user="{{ item.name }}" key="{{item.ssh_key_rsa}}"
   with_items: "{{ admin_users }}"
   become: yes
-  no_log: true
+  no_log: True
   when: item.ssh_key_rsa is defined
 
 - name: Admin Users | Deleted user removal

@@ -2,6 +2,7 @@
 - name: Ansible Playbook for configuring brand new Raspberry Pi
 
   hosts: rpis
+  connection: paramiko
   roles:
     - common
 #    - openhab
@@ -11,9 +12,9 @@
   become: yes
   vars:
     update_admin_users: yes
-    upgrade_all_apt_pkgs: no
-    add_mount_for_usb: yes
+    upgrade_all_apt_pkgs: yes
+    add_mount_for_usb: no
     install_vim: yes
     configure_wifi: yes
-    configure_samba: yes
-    configure_openvpn: yes
+    configure_samba: no
+    configure_openvpn: no

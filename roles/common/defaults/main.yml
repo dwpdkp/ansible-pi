@@ -8,4 +8,3 @@ install_vim: yes
 configure_wifi: yes
 configure_samba: yes
 configure_openvpn: yes
-

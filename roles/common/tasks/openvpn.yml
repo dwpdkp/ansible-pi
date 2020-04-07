@@ -1,5 +1,5 @@
 ---
-- include_vars: vault.yml
+- include_vars: openvpn-vault.yml
 
 # tasks file for openvpn
 - name: Openvpn | Install openvpn

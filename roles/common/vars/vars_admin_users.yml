@@ -18,19 +18,20 @@ users_create_homedirs: true
 # Lists of users to create and delete
 admin_users:
 - name: root
-  password: "$6$rounds=656000$7nSWJA/1kTcU67W5$SGa1M9SEZRO3xmbRZ5Mr9kmMS66ynvioOnwCOJ5GtB69EWsSNAVAQCL5wY/C2JRItrPk/FmKAe2Lnbw3tNWLB0"
+  password: "$6$rounds=656000$FzwEAl9oLbr9wO.G$vZN8CCCZWUjPyuQcPjmsq5y82dZJS.DY1N5uxzAJQViGLtqkfIfUvfmpWzFcIvAMQEN9B/fgyY/mYPv9kC5DY0"
   state: "present"
   groups: "root"
   comment: root
 
 - name: pi
-  password: "$6$rounds=656000$.1mebssV3FgNqzLc$saqIHTgA52/s4r/Pn1w2WPkvRG7XDKVFTwUGP7aDQm18Qcu0bzHDrSVROvj598TFet2EodKdhNe/Z8Q.xRbUc."
+  password: "$6$rounds=656000$FzwEAl9oLbr9wO.G$vZN8CCCZWUjPyuQcPjmsq5y82dZJS.DY1N5uxzAJQViGLtqkfIfUvfmpWzFcIvAMQEN9B/fgyY/mYPv9kC5DY0"
   state: "present"
   groups: "adm"
   comment: pi
+  ssh_key_rsa: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIG0fvq7eTShh4xTgr1uB8WYoGRg2+6hHgvA/yHOzLk2YfGpRoRnh7eeaX4FekMq2p0xNX0rdFBI56mC44VQk0/8Lqap3pZStdXW5nHQ9LIrr6yIXgwOhJEtM+9TWaTHXK/D9vdLIiEspdE1+iF+7fqicxtul3KQeZkMt3k+HigZNneOhBx/vgkHRrJ2baTX6cDhvdh9Ir2cfJP4SuwiVbbCeQJyZLv2VluFs4L1wp4PdbbicOBmNByMDOGuhr4JuuGhl5n5Kbv7dbNhUfORQkkbmaSKPt4ITTG0khuTFcISltHItSNQZPUjTyrmvOw/OY6OCpbWxAC8Zwrsu45nwH doug@dougspi"
 
 - name: dpearson
-  password: "$6$rounds=656000$5GpeMzQGmx5.xv9R$8FFn3NhyhwyUwyOrx7BXSjWvdCCHk3IR7vyLHUa8ATzcpLKDKuhklvWKWqeMYL3jkCHWvAkogQxkzEQkYVIdl."
+  password: "$6$rounds=656000$FzwEAl9oLbr9wO.G$vZN8CCCZWUjPyuQcPjmsq5y82dZJS.DY1N5uxzAJQViGLtqkfIfUvfmpWzFcIvAMQEN9B/fgyY/mYPv9kC5DY0"
   state: "present"
   groups: "adm"
   comment: "Douglas Pearson"
