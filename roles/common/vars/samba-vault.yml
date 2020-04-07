@@ -1,0 +1,5 @@
+---
+# encrypted vars file for openvpn
+samba_users:
+  - name: 'pi'
+    smbpasswd: 'Ju9f22ps'
